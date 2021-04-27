@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Recipe</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row" style="border:1px solid black;width: 50%;margin-left:25%;margin-top: 20px;">
+        <div class="row" style="background-color:cyan;margin-left:0px;mso-border-between-color: cyan">
+            <div class="col-md-6">
+                <h3 style="color: black;" th:text="${recipe.description}">Recipe Description Here!   </h3>
+            </div>
+            <div class="col-md-6">
+
+                <a class="btn btn-default" href="#"
+                   th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">Change Image</a>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Categories:</h4>
+            </div>
+            <div class="col-md-4">
+                <ul>
+
+                    <li th:each="category:${recipe.categories}" th:text="${category.getDescription()}">cat three</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <img src="../../static/images/one.jpg"
+                     th:src="@{'/recipe/' + ${recipe.id} + '/recipeimage'}"
+                     width="200" height="200">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p>Prep Time:</p>
+                <p>Cook Time:</p>
+                <p>Source:</p>
+            </div>
+            <div class="col-md-3">
+                <p th:text="${(recipe.prepTime+' Min')}">30 min</p>
+                <p th:text="${(recipe.cookTime+' Min')}">30 min</p>
+                <p th:text="${recipe.source}">30 min</p>
+            </div>
+            <div class="col-md-3">
+                <p>Difficulty:</p>
+                <p>Servings:</p>
+                <p>URL:  <p> <a href="#" th:text="${recipe.getUrl()}">http://www.example.com</a></p></p>
+            </div>
+            <div class="col-md-3">
+                <p th:text="${recipe.difficulty}">Easy</p>
+                <p th:text="${recipe.getServings()}">4</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="row" style="border:1px solid black;width: 50%;margin-left:25%;margin-top: 20px;">
+        <div class="row" style="background-color:cyan;margin-left:0px;mso-border-between-color: cyan">
+            <div class="col-md-8">
+                <h3 style="color: black;">Ingredients</h3>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-default" href="#"
+                   th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <ul>
+                    <li th:remove="all">1 Cup of milk</li>
+                    <li th:each="ingredient:${recipe.ingredients}" th:text="${(ingredient.getAmount()+' '+ingredient.uom.getDescription()+' - '+ingredient.getDescription())}">1 Teaspoon of chocolate</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="border:1px solid black;width: 50%;margin-left:25%;margin-top: 20px;">
+        <div class="row" style="background-color:cyan;margin-left:0px;mso-border-between-color: cyan">
+
+            <h3 style="color: black;">Directions</h3>
+
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <p th:text="${recipe.directions}"> "Sprinkle with salt and lime (or lemon) juice. The acid in the lime juice will provide some balance to the richness of the avocado and will help delay the avocados from turning brown.\n" +
+                    "\n" +
+                    "Add the chopped onion, cilantro, black pepper, and chiles. Chili peppers vary individually in their hotness. So, start with a half of one chili pepper and add to the guacamole to your desired degree of hotness.\n" +
+                    "\n" +
+                    "Remember that much of this is done to taste because of the variability in the fresh ingredients. Start with this recipe and adjust to your taste.\n" +
+                    "\n" +
+                    "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it just before serving.\n" +
+                    "\n" +
+                    "Serve:\n" +
+                    "Serve immediately, or if making a few hours ahead, place plastic wrap on the surface of the guacamole and press down to cover it and to prevent air reaching it. (The oxygen in the air causes oxidation which will turn the guacamole brown.) Refrigerate until ready to serve.");
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="border:1px solid black;width: 50%;margin-left:25%;margin-top: 20px;">
+        <div class="row" style="background-color:cyan;margin-left:0px;mso-border-between-color: cyan">
+
+            <h3 style="color: black;">Notes</h3>
+
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <p th:text="${recipe.notes.recipeNotes}"> "Sprinkle with salt and lime (or lemon) juice. The acid in the lime juice will provide some balance to the richness of the avocado and will help delay the avocados from turning brown.\n" +
+                    "\n" +
+                    "Add the chopped onion, cilantro, black pepper, and chiles. Chili peppers vary individually in their hotness. So, start with a half of one chili pepper and add to the guacamole to your desired degree of hotness.\n" +
+                    "\n" +
+                    "Remember that much of this is done to taste because of the variability in the fresh ingredients. Start with this recipe and adjust to your taste.\n" +
+                    "\n" +
+                    "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it just before serving.\n" +
+                    "\n" +
+                    "Serve:\n" +
+                    "Serve immediately, or if making a few hours ahead, place plastic wrap on the surface of the guacamole and press down to cover it and to prevent air reaching it. (The oxygen in the air causes oxidation which will turn the guacamole brown.) Refrigerate until ready to serve.");
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
